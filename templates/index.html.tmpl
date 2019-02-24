@@ -60,7 +60,7 @@
                             var el = $("#instance-" + instanceName);
                             if (el.length == 0) {
                                 console.log("creating instance " + instanceName);
-                                var elData = '<div id="instance-' + instanceName + '" class="ui card container-instance"><div class="image"><img width="25%" height="25%" src="static/img/container.png"></div><div class="content centered view-computer"><div> {{ if .ShowVersion }}<div class="ui top left attached ' + color + ' label">' + data.version +'</div>{{ end }} <div id="instance-label-' + instanceName + '"class="ui top right attached green serving label">serving</div>' + instanceName + '</div></div></div>';
+                                var elData = '<div id="instance-' + instanceName + '" class="ui card container-instance"><div class="image"><img width="25%" height="25%" src="static/img/rancher-logo-cow-blue.png"></div><div class="content centered view-computer"><div> {{ if .ShowVersion }}<div class="ui top left attached ' + color + ' label">' + data.version +'</div>{{ end }} <div id="instance-label-' + instanceName + '"class="ui top right attached green serving label">serving</div>' + instanceName + '</div></div></div>';
 
                                 $("div.container-group").append(elData);
                                 el = $("#instance-" + instanceName);
@@ -99,7 +99,9 @@
         <div class="ui two column relaxed doubling padded grid">
             <div class="six wide column meta">
                 <div class="ui container">
-                    <img class="logo center" src="static/img/moby.svg"/>
+                    Forked of <a href="https://github.com/ehazlett/docker-demo" target="_blank">ehazlett/docker-demo</a>
+                    <img class="logo center" src="static/img/rancher-logo-stacked-white.png"/>
+
 
                     {{if ne .Title ""}}
                     <div class="row centered title">

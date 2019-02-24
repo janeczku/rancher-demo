@@ -30,4 +30,6 @@ COPY --from=ui /usr/src/app/ui/semantic/dist/themes/default/assets static/dist/t
 COPY --from=app /go/src/app/docker-demo /bin/docker-demo
 COPY templates /templates
 EXPOSE 8080
+ENV SHOW_VERSION=on
+ENV TITLE="Rancher Demo App"
 ENTRYPOINT ["/bin/docker-demo"]
