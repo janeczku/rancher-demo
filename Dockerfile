@@ -22,6 +22,7 @@ RUN go build -a -v -tags 'netgo' -ldflags '-w -linkmode external -extldflags -st
 
 FROM alpine:latest
 MAINTAINER "Evan Hazlett <ejhazlett@gmail.com>"
+ARG APP_VER
 RUN apk add -U --no-cache curl
 COPY static /static
 COPY --from=ui /usr/src/app/ui/semantic/dist/semantic.min.css static/dist/semantic.min.css
@@ -32,4 +33,5 @@ COPY templates /templates
 EXPOSE 8080
 ENV SHOW_VERSION=on
 ENV TITLE="Rancher Demo App"
+ENV VERSION ${APP_VER:-latest}
 ENTRYPOINT ["/bin/docker-demo"]

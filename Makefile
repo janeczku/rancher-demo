@@ -1,8 +1,8 @@
 CGO_ENABLED=0
 GOOS=linux
 GOARCH=amd64
-TAG?=latest
-REPO=ehazlett/docker-demo
+REPO=janeczku/rancher-demo
+VERSION=`cat ./VERSION`
 
 all: build
 
@@ -13,6 +13,9 @@ binary:
 	@go build -ldflags '-w -linkmode external -extldflags -static' -o docker-demo .
 
 build:
-	@docker build -t ${REPO}:${TAG} .
+	@docker build --build-arg APP_VER=${VERSION} -t ${REPO}:${VERSION} .
 
-.PHONY: build binary
+release:
+	@docker push ${REPO}:${VERSION}
+
+.PHONY: build binary release
