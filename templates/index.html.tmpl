@@ -163,17 +163,20 @@
                     Inspired by <a href="https://github.com/ehazlett/docker-demo" target="_blank">ehazlett/docker-demo</a>
                     <img class="logo center" src="static/img/rancher-logo-stacked-white.png"/>
 
-
-
+                    {{if ne .Title ""}}
+                    <div class="row centered title">
+                        <h1 class="ui header">{{ .Title }}</h1>
+                    </div>
+                    {{end}}
 
                     <div class="row centered">
-                        <div class="ui huge statistic">
+                        <div class="ui statistic small">
                             <div id="container-count" class="value"></div>
                             <div id="container-count-label" class="label"></div>
                         </div>
                     </div>
                     <div class="row centered container-backend hide">
-                        <div class="ui statistic">
+                        <div class="ui statistic small">
                             <div id="current-container" class="value"></div>
                             <div class="label">current backend</div>
                         </div>

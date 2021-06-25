@@ -1,4 +1,4 @@
-FROM node:16 as ui
+FROM node:11 as ui
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
@@ -19,7 +19,7 @@ WORKDIR /go/src/app
 ENV GO111MODULE=on
 RUN go build -a -v -tags "netgo" -ldflags "-X main.buildVer=${version} -w -linkmode external -extldflags -static" -o rancher-demo .
 
-FROM alpine:3
+FROM alpine:3.13.5
 COPY static /static
 COPY --from=ui /usr/src/app/ui/semantic/dist/semantic.min.css /static/dist/semantic.min.css
 COPY --from=ui /usr/src/app/ui/semantic/dist/semantic.min.js /static/dist/semantic.min.js
