@@ -13,7 +13,6 @@ for showing scale-in of an upgraded application.
 ## Environment Variables
 
 - `TITLE`: sets title in demo app
-- `VERSION`: The version string displayed in the UI
 - `REFRESH_INTERVAL`: interval in milliseconds for page to refresh (default: 1000)
 - `EXPIRE_INTERVAL`: how long a replica can go without being seen before we remove it from the display (default: 10s)
 - `REMOVE_INTERVAL`: how long after `EXPIRE_INTERVAL` until we remove the icon (default: 20s)
