@@ -47,13 +47,14 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
 #          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: bashofmann/rancher-demo:${{ env.RELEASE_VERSION }}
+          build-args: version=${{ env.RELEASE_VERSION }}
+          tags: janeczku/rancher-demo:${{ env.RELEASE_VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: bashofmann/rancher-demo:${{ env.RELEASE_VERSION }}
+          image-ref: janeczku/rancher-demo:${{ env.RELEASE_VERSION }}
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
@@ -89,8 +90,8 @@ jobs:
         run: |
           export PATH=${PATH}:`go env GOPATH`/bin
           go get github.com/davidrjonas/semver-cli
-          git clone git@github.com:bashofmann/demo-charts.git
-          cd demo-charts
+          git clone git@github.com:janeczku/fleet-demo-charts.git
+          cd fleet-demo-charts
           sed -i "s/appVersion:.*/appVersion: ${{ env.RELEASE_VERSION }}/g" charts/rancher-demo/Chart.yaml
           current_chart_version=$(cat charts/rancher-demo/Chart.yaml | grep "^version: .*" | grep -o "[0-9.]\+")
           next_chart_version=$(semver-cli inc minor $current_chart_version)
@@ -106,7 +107,7 @@ jobs:
       - uses: ifaxity/wait-on-action@v1
         name: wait for helm release
         with:
-          resource: https://github.com/bashofmann/demo-charts/releases/download/rancher-demo-${{ env.CHART_VERSION }}/rancher-demo-${{ env.CHART_VERSION }}.tgz
+          resource: https://github.com/janeczku/fleet-demo-charts/releases/download/rancher-demo-${{ env.CHART_VERSION }}/rancher-demo-${{ env.CHART_VERSION }}.tgz
           interval: 10s
 
   deploy-fleet:
@@ -132,11 +133,11 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          helm repo add demo-charts https://bashofmann.github.io/demo-charts
+          helm repo add fleet-demo-charts https://janeczku.github.io/fleet-demo-charts
           next_chart_version=$(helm search repo rancher-demo -o json | jq -r '.[0].version')
-          git clone git@github.com:bashofmann/rancher-k3s-fleet-examples.git
-          cd rancher-k3s-fleet-examples
-          sed -i "s/version: .*/version: $next_chart_version/g" cicd/rancher-demo/fleet.yaml
+          git clone git@github.com:janeczku/fleet-demo-gitops.git
+          cd fleet-demo-gitops
+          sed -i "s/version: .*/version: $next_chart_version/g" rancher-demo/fleet.yaml
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .

@@ -21,6 +21,7 @@ var (
 	waitGroup     = sync.WaitGroup{}
 	started       = time.Now()
 	requests      = 0
+	buildVer      = "dev"
 )
 
 type (
@@ -66,7 +67,7 @@ func getHostname() string {
 func getVersion() string {
 	ver := os.Getenv("VERSION")
 	if ver == "" {
-		ver = "0.1"
+		ver = buildVer
 	}
 
 	return ver
@@ -143,7 +144,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		RemoveInterval:  removeInterval,
 		Metadata:        getMetadata(),
 		SkipErrors:      os.Getenv("SKIP_ERRORS") != "",
-		ShowVersion:     os.Getenv("SHOW_VERSION") != "",
+		ShowVersion:     true,
 	}
 
 	t.Execute(w, cnt)
@@ -280,7 +281,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "rancher-demo"
 	app.Usage = "rancher demo application"
-	app.Version = "1.4.1"
+	app.Version = buildVer
 	app.Author = "@oskapt"
 	app.Email = ""
 	app.Flags = []cli.Flag{

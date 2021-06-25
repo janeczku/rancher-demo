@@ -13,7 +13,7 @@ for showing scale-in of an upgraded application.
 ## Environment Variables
 
 - `TITLE`: sets title in demo app
-- `SHOW_VERSION`: show version of app in ui (`VERSION` env var)
+- `VERSION`: The version string displayed in the UI
 - `REFRESH_INTERVAL`: interval in milliseconds for page to refresh (default: 1000)
 - `EXPIRE_INTERVAL`: how long a replica can go without being seen before we remove it from the display (default: 10s)
 - `REMOVE_INTERVAL`: how long after `EXPIRE_INTERVAL` until we remove the icon (default: 20s)
@@ -36,9 +36,22 @@ for showing scale-in of an upgraded application.
   - chameleons
   - cowmeleons
 
-## Build
+## Build Image
 
-`docker build -t monachus/rancher-demo .`
+`docker build -t janeczku/rancher-demo .`
+
+## Run 
+
+`docker run -p 8080:8080 janeczku/rancher-demo`
+
+## Deploy on Kubernetes
+
+Deploy using the included Helm chart under `./charts` or alternatively:
+
+1. Edit `base/configs/source-vars.yaml` and set the following:
+    - `MY_NAMESPACE`: the namespace into which the app will be deployed (default: `rancher-demo`). This will be created if it does not already exist.
+    - `URL_HOST`: the hostname portion of the URL that the ingress will answer on (default: `rancher-demo.cl.monach.us`)
+2. Run `kubectl apply -k base` to deploy the application.
 
 ## Paths
 
@@ -51,12 +64,4 @@ By default the loaded page will reach back to `/demo` every `REFRESH_INTERVAL` a
 
 The container will listen for traffic on port 8080.
 
-## Running
-
-Deploy using the included Helm chart under `./charts` or alternatively:
-
-1. Edit `base/configs/source-vars.yaml` and set the following:
-    - `MY_NAMESPACE`: the namespace into which the app will be deployed (default: `rancher-demo`). This will be created if it does not already exist.
-    - `URL_HOST`: the hostname portion of the URL that the ingress will answer on (default: `rancher-demo.cl.monach.us`)
-2. Run `kubectl apply -k base` to deploy the application.
 
