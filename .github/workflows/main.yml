@@ -1,9 +1,6 @@
 name: Release
 
-on:
-  push:
-    branches:
-      - 'gitops'
+on: push
 
 jobs:
 
