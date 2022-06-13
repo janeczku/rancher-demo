@@ -29,7 +29,11 @@ spec:
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-        - backend:
-            serviceName: {{ $fullName }}
-            servicePort: http
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: {{ $fullName }}
+              port:
+                name: http
 {{- end }}
