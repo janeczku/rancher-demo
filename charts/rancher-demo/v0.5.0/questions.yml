@@ -1,0 +1,47 @@
+questions:
+- variable: ingress.enabled
+  default: "true"
+  description: "Create an ingress endpoint for this app"
+  label: Enable Ingress
+  type: boolean
+  group: "Ingress Configuration"
+- variable: ingress.host
+  default: "xip.io"
+  description: "Enter the DNS name for the ingress endpoint. Leave the default to automatically generate a valid DNS name."
+  type: string
+  label: Ingress Endpoint DNS
+  group: "Ingress Configuration"
+- variable: app.localization.title
+  default: "Rancher Demo App"
+  description: "Customize the title displayed in the application UI"
+  type: string
+  label: Localized Title
+  group: "App Configuration"
+- variable: app.localization.pets
+  default: "cows"
+  description: "Pick your favourite container pet!"
+  type: enum
+  options:
+    - "cows"
+    - "chameleons"
+    - "cowmeleons"
+  label: "Container Pet"
+  group: "App Configuration"
+- variable: app.localization.color
+  default: "black"
+  description: "Add some color to the mix (specify a CSS color name)"
+  type: string
+  label: Container Color
+  group: "App Configuration"
+- variable: image.repository
+  default: "janeczku/rancher-demo"
+  description: "Specify the container image repository name"
+  type: string
+  label: Image Repository
+  group: "Image Configuration"
+- variable: image.tag
+  default: "v0.5.0"
+  description: "Specify the container image tag"
+  type: string
+  label: Image Tag
+  group: "Image Configuration"
